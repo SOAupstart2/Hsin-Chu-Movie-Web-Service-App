@@ -1,0 +1,18 @@
+.container
+  form action='/users' method='post' id='check-form'
+    dl class='user-input'
+      dt
+        label for='check-usernames'  Language
+      dd
+        select name='language'
+          option value='chinese' Chinese
+          option value='english' English
+    dl class='user-input'
+      dt
+        label for='check-badges'  Location
+      dd
+        select name='location'
+          option value='hsinchu' Hsinchu
+    .float-clear
+      input type='submit' value='submit' id='check-submit' class='submit'
+
