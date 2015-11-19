@@ -38,74 +38,74 @@ class ApplicationController < Sinatra::Base
     'our github homepage</a>.'
   end
 
-  api_get_movie_name = lambda do
-    content_type :json
-    cinema_names(params[:theater_id])
-  end
+  # api_get_movie_name = lambda do
+  #   content_type :json
+  #   cinema_names(params[:theater_id])
+  # end
+  #
+  # api_get_movie_info = lambda do
+  #   content_type :json
+  #   cinema_table(params[:theater_id])
+  # end
+  #
+  # api_get_user_info = lambda do
+  #   content_type :json
+  #   begin
+  #     user = User.find(params[:id])
+  #     location = user.location
+  #     language = user.language
+  #     film_name = params[:name]
+  #     date_time = params[:time]
+  #     logger.info({ id: user.id,
+  #                   location: location,
+  #                   language: language,
+  #                   name: film_name,
+  #                   time: date_time
+  #                   }.to_json)
+  #   rescue => e
+  #     logger.error "Fail: #{e}"
+  #     halt 404
+  #   end
+  #
+  #   user_info = { id: user.id,
+  #                 location: location,
+  #                 language: language }
+  #   search_name = film_name ? film_times(location, film_name) : {}
+  #   search_time = date_time ? films_after_time(location, date_time) : {}
+  #
+  #   {user_info: user_info,
+  #    search_name: search_name,
+  #    search_time: search_time}.to_json
+  # end
+  #
+  # api_post_user_info = lambda do
+  #   content_type :json
+  #   begin
+  #     req = JSON.parse(request.body.read)
+  #     logger.info req
+  #   rescue
+  #     halt 400
+  #   end
+  #
+  #   user = User.new(
+  #     location: req['location'],
+  #     language: req['language'])
+  #
+  #   if user.save
+  #     status 201
+  #     redirect "/api/v1/users/#{user.id}", 303
+  #   else
+  #     halt 500, 'Error saving user request to the database'
+  #   end
+  # end
+  #
+  # # Web API Routes
+  # get '/api/v1/?', &api_get_root
+  # get '/api/v1/cinema/:theater_id/movies/?', &api_get_movie_name
+  # get '/api/v1/cinema/:theater_id.json', &api_get_movie_info
+  # get '/api/v1/users/:id/?', &api_get_user_info
+  # post '/api/v1/users/?', &api_post_user_info
 
-  api_get_movie_info = lambda do
-    content_type :json
-    cinema_table(params[:theater_id])
-  end
-
-  api_get_user_info = lambda do
-    content_type :json
-    begin
-      user = User.find(params[:id])
-      location = user.location
-      language = user.language
-      film_name = params[:name]
-      date_time = params[:time]
-      logger.info({ id: user.id,
-                    location: location,
-                    language: language,
-                    name: film_name,
-                    time: date_time
-                    }.to_json)
-    rescue => e
-      logger.error "Fail: #{e}"
-      halt 404
-    end
-
-    user_info = { id: user.id,
-                  location: location,
-                  language: language }
-    search_name = film_name ? film_times(location, film_name) : {}
-    search_time = date_time ? films_after_time(location, date_time) : {}
-
-    {user_info: user_info,
-     search_name: search_name,
-     search_time: search_time}.to_json
-  end
-
-  api_post_user_info = lambda do
-    content_type :json
-    begin
-      req = JSON.parse(request.body.read)
-      logger.info req
-    rescue
-      halt 400
-    end
-
-    user = User.new(
-      location: req['location'],
-      language: req['language'])
-
-    if user.save
-      status 201
-      redirect "/api/v1/users/#{user.id}", 303
-    else
-      halt 500, 'Error saving user request to the database'
-    end
-  end
-  
-  # Web API Routes
-  get '/api/v1/?', &api_get_root
-  get '/api/v1/cinema/:theater_id/movies/?', &api_get_movie_name
-  get '/api/v1/cinema/:theater_id.json', &api_get_movie_info
-  get '/api/v1/users/:id/?', &api_get_user_info
-  post '/api/v1/users/?', &api_post_user_info
-  
   helpers do
     def current_page?(path = ' ')
       path_info = request.path_info
@@ -143,13 +143,13 @@ class ApplicationController < Sinatra::Base
       unless user_form.valid?
 
     result = Service.new(request_url, user_form).call
-    
+
     if (result.code != 200)
       flash[:notice] = 'Could not process your request'
       redirect '/users'
       return nil
     end
-        
+
     # session[:results] = result.to_json
     # session[:action] = :create
     redirect "/users/#{result.id}"
