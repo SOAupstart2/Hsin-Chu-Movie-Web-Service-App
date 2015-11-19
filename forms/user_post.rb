@@ -19,7 +19,7 @@ class UserForm
   attribute :location, StringStripped
 
   validates :language, presence: true
-  validates :language, presence: true
+  validates :location, presence: true
 
   def error_fields
     errors.messages.keys.map(&:to_s).join(', ')
