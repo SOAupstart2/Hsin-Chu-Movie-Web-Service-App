@@ -1,11 +1,18 @@
 doctype 5
-html
+html lang="en" 
   head
-    title Hsinchu Movie Information
-    link rel='stylesheet' type='text/css' href='/style.css' media='screen projection'
+    meta charset="utf-8" /
+    meta content="IE=edge" http-equiv="X-UA-Compatible" /
+    meta content="width=device-width, initial-scale=1" name="viewport" /
+    title Kandianting
+    link href="css/bootstrap.min.css" rel="stylesheet" /
+    link href="css/style.css" rel="stylesheet" /
   body
     header
       == slim :nav
+      br/
+      br/
+      br/
     section
       == styled_flash
       == yield
