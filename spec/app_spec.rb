@@ -24,7 +24,7 @@ describe 'Kandianying' do
       @browser.h3(id: 'fortest1').text.must_equal 'h3. Lorem ipsum dolor sit amet.'
       @browser.th(id: 'fortest2').text.must_equal 'Cinema'
       @browser.th(id: 'fortest3').text.must_equal 'Date'
-      @browser.ht(id: 'fortest4').text.must_equal 'Time Section'
+      @browser.th(id: 'fortest4').text.must_equal 'Time Section'
     end
   end
 
