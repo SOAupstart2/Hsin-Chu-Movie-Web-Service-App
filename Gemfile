@@ -35,4 +35,6 @@ group :test do
   gem 'rake'
   gem 'vcr'
   gem 'webmock'
+  gem 'watir-webdriver'
+  gem 'headless'
 end

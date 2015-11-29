@@ -118,7 +118,10 @@ class ApplicationController < Sinatra::Base
   app_get_root = lambda do
     slim :home
   end
-
+  
+  app_get_history = lambda do
+    slim :history
+  end
   app_get_user = lambda do
     slim :user
   end
@@ -158,6 +161,7 @@ class ApplicationController < Sinatra::Base
 
   # Web App Views Routes
   get '/', &app_get_root
+  get '/history', &app_get_history
   get '/users', &app_get_user
   get '/users/:id/?', &app_get_movie
   post '/users', &app_post_user
