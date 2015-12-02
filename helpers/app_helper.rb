@@ -1,7 +1,6 @@
 # Helpers for main sinatra web application
 module AppHelpers
-
-  LOCATION = {"hsinchu"=>['05','12']}
+  LOCATION = { 'hsinchu' => %w(05 12) }
 
   def cinema(theater_id)
     CinemaInfo.new(theater_id)
