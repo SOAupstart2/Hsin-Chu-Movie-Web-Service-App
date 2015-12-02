@@ -88,7 +88,6 @@ GEM
     slim (3.0.6)
       temple (~> 0.7.3)
       tilt (>= 1.3.3, < 2.1)
-    sqlite3 (1.3.11)
     temple (0.7.6)
     thread_safe (0.3.5)
     tilt (2.0.1)
@@ -133,12 +132,8 @@ DEPENDENCIES
   sinatra-contrib
   sinatra-flash
   slim
-  sqlite3
   tux
   vcr
   virtus
   watir-webdriver
   webmock
-
-BUNDLED WITH
-   1.10.6

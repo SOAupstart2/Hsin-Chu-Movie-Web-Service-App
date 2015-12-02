@@ -4,7 +4,6 @@ ruby '2.2.0'
 
 gem 'sinatra'
 gem 'sinatra-contrib'
-# gem 'kandianying'
 gem 'puma'
 
 gem 'activerecord'
@@ -19,9 +18,9 @@ gem 'slim'
 gem 'virtus'
 gem 'activemodel'
 
-group :development, :test do
-  gem 'sqlite3'
-end
+# group :development, :test do
+#   gem 'sqlite3'
+# end
 
 # group :production do
 #   gem 'pg'

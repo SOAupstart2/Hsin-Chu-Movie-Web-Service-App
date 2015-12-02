@@ -1,7 +1,10 @@
 ENV['RACK_ENV'] = 'test'
 
-Dir.glob('./{helpers,controllers,forms,services}/*.rb').each { |file| require file }
+Dir.glob('./{helpers,controllers,forms,services,values}/*.rb').each do |file|
+  require file
+end
 require 'minitest/autorun'
+require 'minitest/rg'
 require 'rack/test'
 require 'watir-webdriver'
 require 'headless'
