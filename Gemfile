@@ -36,4 +36,5 @@ group :test do
   gem 'webmock'
   gem 'watir-webdriver'
   gem 'headless'
+  gem 'page-object'
 end
