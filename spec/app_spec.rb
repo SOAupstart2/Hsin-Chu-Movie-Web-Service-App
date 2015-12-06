@@ -25,7 +25,7 @@ describe 'Kandianying' do
   describe 'Checking the main components of history page' do
     it 'finds main components' do
       visit HistoryPage do |page|
-        page.id_fortest1.must_equal 'h3. Lorem ipsum dolor sit amet.'
+        page.id_fortest1.must_equal 'Movie Timeline'
         page.cinema_table?.must_equal true
         page.location_button?.must_equal true
         page.language_button?.must_equal true
