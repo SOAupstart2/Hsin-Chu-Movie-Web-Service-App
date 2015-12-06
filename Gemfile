@@ -18,6 +18,8 @@ gem 'slim'
 gem 'virtus'
 gem 'activemodel'
 
+gem 'chartkick'
+
 # group :development, :test do
 #   gem 'sqlite3'
 # end

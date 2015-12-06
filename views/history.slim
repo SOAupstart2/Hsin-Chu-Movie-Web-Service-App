@@ -1,3 +1,7 @@
+script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" 
+script src="//www.google.com/jsapi"
+script src='js/chartkick.js' type='text/javascript'
+
 .container-fluid
   .row
     .col-md-12
@@ -28,61 +32,19 @@
           li
             a href="#"  Something else here
       h3 id='fortest1'
-        | h3. Lorem ipsum dolor sit amet.
-      table.table
-        thead
-          tr
-            th
-              | \#
-            th
-              | Cinema
-            th
-              | Date
-            th
-              | Time Section
-        tbody
-          tr
-            td
-              | 1
-            td
-              | TB - Monthly
-            td
-              | 01/04/2012
-            td
-              | Default
-          tr.active
-            td
-              | 1
-            td
-              | TB - Monthly
-            td
-              | 01/04/2012
-            td
-              | Approved
-          tr.success
-            td
-              | 2
-            td
-              | TB - Monthly
-            td
-              | 02/04/2012
-            td
-              | Declined
-          tr.warning
-            td
-              | 3
-            td
-              | TB - Monthly
-            td
-              | 03/04/2012
-            td
-              | Pending
-          tr.danger
-            td
-              | 4
-            td
-              | TB - Monthly
-            td
-              | 04/04/2012
-            td
-              | Call in to confirm
+        | Movie Timeline
+      #movie_timeline
+      javascript:
+        new Chartkick.Timeline("movie_timeline", 
+        [["Our Brand is Crisis", "1992-02-03 00:00:00", "1992-02-03 12:00:00"],
+         ["Our Brand is Crisis", "1992-02-03 13:00:00", "1992-02-03 14:00:00"],
+         ["The Tag Along", "1992-02-03 00:00:00", "1992-02-03 12:00:00"],
+         ["The Tag Along", "1992-02-03 08:00:00", "1992-02-03 14:00:00"]
+        ]);
+      / javascript:
+      /   data = [
+      /     {"name":"Workout", 
+      /      "data": {"2013-02-10 00:00:00 -0800": 3, "2013-02-17 00:00:00 -0800": 4}},{"name":"Call parents", "data": {"2013-02-10 00:00:00 -0800": 5, "2013-02-17 00:00:00 -0800": 3}
+      /     }
+      /   ];
+      /   new Chartkick.LineChart("movie_timeline", data);
