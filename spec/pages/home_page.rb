@@ -1,5 +1,7 @@
 require 'page-object'
 
+# TODO: What's this?
+#
 class HomePage
   include PageObject
 

@@ -2,16 +2,19 @@
 class GetMovieInfoFromAPI
   def initialize(params, settings)
     @id = params[:id]
-    @name = params[:name]
-    @time = params[:time]
+    @name = params[:name] unless params[:name].empty?
+    @time = params[:time] unless params[:time].empty?
     @settings = settings
   end
 
   def name_or_time?
-    if @name
+    if @name && @time
+      "name=#{@name}&time=#{@time}"
+    elsif @name
       "name=#{@name}"
     elsif @time
       "time=#{@time}"
+    else 'name='
     end
   end
 
