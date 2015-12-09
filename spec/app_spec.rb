@@ -4,7 +4,7 @@ require 'page-object'
 
 describe 'Kandianying' do
   include PageObject::PageFactory
-  
+
   before do
     unless @browser
       @headless = Headless.new
