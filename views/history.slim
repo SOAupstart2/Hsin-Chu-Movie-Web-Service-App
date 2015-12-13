@@ -1,8 +1,17 @@
-script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" 
+script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"
 script src="//www.google.com/jsapi"
 script src='js/chartkick.js' type='text/javascript'
 
 .container-fluid
+
+  - if @input_movie_name
+      h3 Movie name
+      = @movie_name
+      h3 Movie info
+      = @movie_info
+  - else
+      p Not found the movie name or no input
+    
   .row
     .col-md-12
       .btn-group
@@ -33,7 +42,7 @@ script src='js/chartkick.js' type='text/javascript'
             a href="#"  Something else here
       h3 id='fortest1'
         | Movie Timeline
-      #movie_timeline style=("height: 500px;") 
+      #movie_timeline style=("height: 500px;")
       javascript:
         data = [["Our Brand is Crisis", "2015-12-07 10:50:00", "2015-12-07 12:20:00"],
                ["Our Brand is Crisis", "2015-12-07 12:10:00", "2015-12-07 13:40:00"],
@@ -53,7 +62,7 @@ script src='js/chartkick.js' type='text/javascript'
 
       / javascript:
       /   data = [
-      /     {"name":"Workout", 
+      /     {"name":"Workout",
       /      "data": {"2013-02-10 00:00:00 -0800": 3, "2013-02-17 00:00:00 -0800": 4}},{"name":"Call parents", "data": {"2013-02-10 00:00:00 -0800": 5, "2013-02-17 00:00:00 -0800": 3}
       /     }
       /   ];

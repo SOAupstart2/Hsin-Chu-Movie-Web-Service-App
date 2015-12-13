@@ -3,6 +3,7 @@ require 'sinatra/flash'
 require 'httparty'
 require 'hirb'
 require 'slim'
+require 'json'
 
 # Web Service for Hsinchu cinemas
 class ApplicationController < Sinatra::Base
@@ -46,6 +47,16 @@ class ApplicationController < Sinatra::Base
   end
 
   app_get_history = lambda do
+    @input_movie_name = params[:input_movie_name]
+    
+    api_url = 'https://kandianying.herokuapp.com/'
+    
+    if @input_movie_name
+      @movie_name = HTTParty.get("#{api_url}" + "api/v1/ambassador/english/38897fa9-094f-4e63-9d6d-c52408438cb6/movies")
+      response  = HTTParty.get("#{api_url}" + "/api/v1/ambassador/english/38897fa9-094f-4e63-9d6d-c52408438cb6.json")
+      @movie_info = response.body
+    end
+
     slim :history
   end
 

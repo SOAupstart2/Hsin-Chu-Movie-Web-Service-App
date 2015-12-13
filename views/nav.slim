@@ -1,6 +1,6 @@
-nav.navbar.navbar-default.navbar-inverse.navbar-fixed-top role="navigation" 
+nav.navbar.navbar-default.navbar-inverse.navbar-fixed-top role="navigation"
   .navbar-header
-    button.navbar-toggle data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button" 
+    button.navbar-toggle data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"
       span.sr-only Toggle navigation
       span.icon-bar
       span.icon-bar
@@ -12,8 +12,9 @@ nav.navbar.navbar-default.navbar-inverse.navbar-fixed-top role="navigation"
         a href="/history"  History
       li
         a href="#"  Contact Us
-    form.navbar-form.navbar-left role="search" 
+        
+    form.navbar-form.navbar-left role='search' action='/history' method='get' id='user-submit'
       .form-group
-        input.form-control type="text" /
-      button.btn.btn-default type="submit" 
+        input.form-control type='text' name='input_movie_name' id='input_movie_name' placeholder='Enter movie name'/
+      button.btn.btn-default type="submit" class='submit' value="submit"
         | Submit
