@@ -2,10 +2,8 @@ require 'page-object'
 
 # TODO: What's this?
 #
-class HomePage
+class ResultPage
   include PageObject
 
-  page_url 'http://localhost:9292/'
-
-
+  page_url 'http://localhost:9292/result'
 end
