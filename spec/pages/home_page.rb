@@ -5,7 +5,5 @@ require 'page-object'
 class HomePage
   include PageObject
 
-  page_url 'http://localhost:9292/'
-
-
+  page_url 'http://localhost:9393/'
 end
