@@ -26,7 +26,7 @@ class ApplicationController < Sinatra::Base
   end
 
   configure :production do
-    set :api_server, 'http://kandianying.herokuapp.com'
+    set :api_server, 'http://kandianying-dymano.herokuapp.com'
   end
 
   configure :production, :development do
@@ -46,49 +46,28 @@ class ApplicationController < Sinatra::Base
     slim :home
   end
 
-  app_get_history = lambda do
-    @input_movie_name = params[:input_movie_name]
-    
-    api_url = 'https://kandianying.herokuapp.com/'
-    
-    if @input_movie_name
-      @movie_name = HTTParty.get("#{api_url}" + "api/v1/ambassador/english/38897fa9-094f-4e63-9d6d-c52408438cb6/movies")
-      response  = HTTParty.get("#{api_url}" + "/api/v1/ambassador/english/38897fa9-094f-4e63-9d6d-c52408438cb6.json")
-      @movie_info = response.body
-    end
+  app_get_result = lambda do
+    language_input = params[:language]
+    location_input = params[:location]
+    movie_name = params[:movie_name]
 
-    slim :history
-  end
+    USERS_URL = 'http://kandianying-dymano.herokuapp.com/api/v1/users'
 
-  app_get_user = lambda do
-    slim :user
-  end
+    user_post_response = HTTParty.post(
+      USERS_URL,
+      body:{
+        location:location_input, language:language_input
+      }.to_json
+    )
 
-  app_get_movie = lambda do
-    @id = params[:id]
-    if params[:name] || params[:time]
-      @result = GetMovieInfoFromAPI.new(params, settings).call
-    end
-    slim :movie
-  end
+    user_id = user_post_response["user_info"]["id"]
 
-  app_post_user = lambda do
-    user_form = UserForm.new(params)
-    unless user_form.valid?
-      error_send(back, "Following fields are required: #{form.error_fields}")
-    end
-    result = SaveUserToAPI.new(settings, user_form).call
-    if (result.status != 200)
-      flash[:notice] = 'Could not process your request'
-      redirect '/users'
-    end
-    redirect "/users/#{result.id}"
+    @film_info = HTTParty.get(USERS_URL + "/#{user_id}?name=#{movie_name}")
+
+    slim :result
   end
 
   # Web App Views Routes
   get '/', &app_get_root
-  get '/history/?', &app_get_history
-  get '/users/?', &app_get_user
-  get '/users/:id/?', &app_get_movie
-  post '/users/?', &app_post_user
+  get '/result/?', &app_get_result
 end
