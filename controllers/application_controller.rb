@@ -43,6 +43,9 @@ class ApplicationController < Sinatra::Base
   end
 
   app_get_root = lambda do
+    @today = Date.today
+    @max_day = @today + 4
+
     slim :home
   end
 
@@ -50,6 +53,7 @@ class ApplicationController < Sinatra::Base
     language_input = params[:language]
     location_input = params[:location]
     movie_name = params[:movie_name]
+    search_time = params[:search_time]
 
     USERS_URL = 'http://kandianying-dymano.herokuapp.com/api/v1/users'
 
@@ -62,7 +66,7 @@ class ApplicationController < Sinatra::Base
 
     user_id = user_post_response["user_info"]["id"]
 
-    @film_info = HTTParty.get(USERS_URL + "/#{user_id}?name=#{movie_name}")
+    @film_info = HTTParty.get(USERS_URL + "/#{user_id}?name=#{movie_name}&time=#{search_time}")
 
     slim :result
   end

@@ -4,12 +4,12 @@
 
     form action='/result' method='get'
 
-      label Language id='language_label'
+      label Language
       select name='language' class='language_input'
         option selected="selected" value='english' English
         option value='chinese' Chinese
 
-      label Location id='location_label'
+      label Location
       select name='location' id='location_input'
         option selected="selected" value='taipei' Taipei
         option value='new taipei city' New Taipei City
@@ -20,6 +20,8 @@
         option value='toufen' Toufen
         option value='pingtung' Pingtung
         option value='kinmen' Kinmen
+
+      input type='date' name='search_time' value="#{@today}" min="#{@today}" max="#{@max_day}"
 
       input type='text' name='movie_name' id='movie_name' placeholder='Movie name here'
 
