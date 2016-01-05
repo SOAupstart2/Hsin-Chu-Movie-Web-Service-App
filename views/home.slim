@@ -8,14 +8,14 @@
 
     form role='form' action='/result' method='get'
 
-      .col-md-4
+      .col-md-3
         .form-group
           label.text-info Language for the result
           select.form-control name='language' id='language_input'
             option selected="selected" value='english' English
             option value='chinese' Chinese
 
-      .col-md-4
+      .col-md-3
         .form-group
           label.text-info Location
           select.form-control name='location' id='location_input'
@@ -29,17 +29,17 @@
             option value='pingtung' Pingtung
             option value='kinmen' Kinmen
 
-      .col-md-4
+      .col-md-3
         .form-group
           label.text-info Search date
           input.form-control type='date' required='' name='search_time' value="#{@today}" min="#{@today}" max="#{@max_day}"
 
-      .col-md-4
+      .col-md-3
         .form-group
           label.text-info Movie name
           input.form-control type='text' name='movie_name' id='movie_name' placeholder='movie name here...'
-
-      .col-md-4
+      
+      .col-md-4 class='col-md-offset-4'
         .form-group
           label &nbsp;
           input.btn.btn-primary.form-control type='submit' value='Search'
