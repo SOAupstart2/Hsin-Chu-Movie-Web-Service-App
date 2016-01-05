@@ -13,7 +13,7 @@ class ApplicationController < Sinatra::Base
   enable :sessions
   register Sinatra::Flash
   use Rack::MethodOverride
-  Chartkick.options[:html] = '<div id="%{id}" style="height:500px;">Loading ....</div>'
+  Chartkick.options[:html] = '<div id="%{id}" style="height:385px;">Loading ....</div>'
   Slim::Engine.set_options pretty: true, sort_attrs: false
   set :views, File.expand_path('../../views', __FILE__)
   set :public_folder, File.expand_path('../../public', __FILE__)
@@ -37,7 +37,7 @@ class ApplicationController < Sinatra::Base
 
   app_get_root = lambda do
     @today = Date.today
-    @max_day = @today + 4
+    @max_day = @today + 2
 
     slim :home
   end
@@ -72,7 +72,7 @@ class ApplicationController < Sinatra::Base
     end
     @user_form = user_form
     @today = Date.today
-    @max_day = @today + 4
+    @max_day = @today + 2
 
     slim :result
   end
