@@ -41,23 +41,16 @@ class ApplicationController < Sinatra::Base
   end
 
   app_get_result = lambda do
-    USERS_PAGE_URL = 'http://kandianying-dymano.herokuapp.com/api/v1/users'
+    USERS_URL = 'http://kandianying-dymano.herokuapp.com/api/v1/users'
+
+    # Store user input into form object
     user_form = UserForm.new(params)
 
-    # Register user location and language, and get the response
-    post_response = HTTParty.post(
-      USERS_PAGE_URL,
-      body:{
-        location:user_form.location, language:user_form.language
-      }.to_json
-    )
+    # Get user ID by using service object
+    user_id = GetUserID.new(params, USERS_URL).call
 
-    # Escape to handle Chinese input
-    escaped_url = URI.escape(
-      USERS_PAGE_URL + \
-      "/#{post_response['user_info']['id']}" \
-      "?name=#{user_form.movie_name}&time=#{user_form.search_time}"
-    )
+    # Escape URL to handle Chinese input
+    escaped_url = URI.escape(USERS_URL + "/#{user_id}" + "?name=#{user_form.movie_name}&time=#{user_form.search_time}")
 
     @film_info = HTTParty.get(escaped_url)
 
