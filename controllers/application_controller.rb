@@ -66,7 +66,11 @@ class ApplicationController < Sinatra::Base
 
     user_id = user_post_response["user_info"]["id"]
 
-    @film_info = HTTParty.get(USERS_URL + "/#{user_id}?name=#{movie_name}&time=#{search_time}")
+    begin
+      @film_info = HTTParty.get(USERS_URL + "/#{user_id}?name=#{movie_name}&time=#{search_time}")
+    rescue
+      @film_info = "Invalid input. Please enter movie name in English."
+    end
 
     slim :result
   end

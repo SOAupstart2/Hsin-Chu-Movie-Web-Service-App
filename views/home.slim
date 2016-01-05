@@ -10,7 +10,7 @@
 
       .col-md-4
         .form-group
-          label.text-info Language for movie name input
+          label.text-info Language for the result
           select.form-control name='language' id='language_input'
             option selected="selected" value='english' English
             option value='chinese' Chinese
@@ -32,7 +32,7 @@
       .col-md-4
         .form-group
           label.text-info Search date
-          input.form-control type='date' name='search_time' value="#{@today}" min="#{@today}" max="#{@max_day}"
+          input.form-control type='date' required='' name='search_time' value="#{@today}" min="#{@today}" max="#{@max_day}"
 
       .col-md-4
         .form-group
