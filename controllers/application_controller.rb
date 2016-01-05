@@ -33,15 +33,6 @@ class ApplicationController < Sinatra::Base
     enable :logging
   end
 
-  helpers do
-    def current_page?(path = ' ')
-      path_info = request.path_info
-      path_info += ' ' if path_info == '/'
-      request_path = path_info.split '/'
-      request_path[1] == path
-    end
-  end
-
   app_get_root = lambda do
     @today = Date.today
     @max_day = @today + 4
@@ -50,27 +41,25 @@ class ApplicationController < Sinatra::Base
   end
 
   app_get_result = lambda do
-    language_input = params[:language]
-    location_input = params[:location]
-    movie_name = params[:movie_name]
-    search_time = params[:search_time]
+    USERS_PAGE_URL = 'http://kandianying-dymano.herokuapp.com/api/v1/users'
+    user_form = UserForm.new(params)
 
-    USERS_URL = 'http://kandianying-dymano.herokuapp.com/api/v1/users'
-
-    user_post_response = HTTParty.post(
-      USERS_URL,
+    # Register user location and language, and get the response
+    post_response = HTTParty.post(
+      USERS_PAGE_URL,
       body:{
-        location:location_input, language:language_input
+        location:user_form.location, language:user_form.language
       }.to_json
     )
 
-    user_id = user_post_response["user_info"]["id"]
+    # Escape to handle Chinese input
+    escaped_url = URI.escape(
+      USERS_PAGE_URL + \
+      "/#{post_response['user_info']['id']}" \
+      "?name=#{user_form.movie_name}&time=#{user_form.search_time}"
+    )
 
-    begin
-      @film_info = HTTParty.get(USERS_URL + "/#{user_id}?name=#{movie_name}&time=#{search_time}")
-    rescue
-      @film_info = "Invalid input. Please enter movie name in English."
-    end
+    @film_info = HTTParty.get(escaped_url)
 
     slim :result
   end
