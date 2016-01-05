@@ -1,2 +1,45 @@
+script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+script src="//www.google.com/jsapi"
+script src='js/chartkick.js' type='text/javascript'
+
 .container-fluid
-  p = @film_info
+  / - if @input_movie_name
+  /     h3 Movie name
+  /     = @movie_name
+  /     h3 Movie info
+  /     = @movie_info
+  / - else
+  /     p Not found the movie name or no input
+
+  .row
+    .col-md-12
+      / .btn-group
+      /   button.btn.btn-default.GINGER_SOFTWARE_control id='location_button'
+      /     | Location
+      /   button.btn.btn-default.dropdown-toggle data-toggle="dropdown"
+      /     span.caret
+      /   ul.dropdown-menu
+      /     li
+      /       a href="#"  Action
+      /     li.disabled
+      /       a href="#"  Another action
+      /     li.divider
+      /     li
+      /       a href="#"  Something else here
+      / .btn-group
+      /   button.btn.btn-default.GINGER_SOFTWARE_control id='language_button'
+      /     | Language
+      /   button.btn.btn-default.dropdown-toggle data-toggle="dropdown"
+      /     span.caret
+      /   ul.dropdown-menu
+      /     li
+      /       a href="#"  Action
+      /     li.disabled
+      /       a href="#"  Another action
+      /     li.divider
+      /     li
+      /       a href="#"  Something else here
+      h3 id='fortest1'
+        | Movie Timeline
+      == timeline(@film_info, id: 'movie_timeline')
+

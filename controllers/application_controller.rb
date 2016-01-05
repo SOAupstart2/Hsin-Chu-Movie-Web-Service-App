@@ -4,6 +4,8 @@ require 'httparty'
 require 'hirb'
 require 'slim'
 require 'json'
+require 'time'
+require 'chartkick'
 
 # Web Service for Hsinchu cinemas
 class ApplicationController < Sinatra::Base
@@ -52,8 +54,22 @@ class ApplicationController < Sinatra::Base
     # Escape URL to handle Chinese input
     escaped_url = URI.escape(USERS_URL + "/#{user_id}" + "?name=#{user_form.movie_name}&time=#{user_form.search_time}")
 
-    @film_info = HTTParty.get(escaped_url)
+    @get_data = HTTParty.get(escaped_url)
+    @film_info = []
 
+    @get_data["search_name"].each do |cinema, movies|
+      movies.each do |movie, dates|
+        dates.each do |date, times|
+          times.each do |time|
+            start_time = Time.parse(date+' '+time)
+            end_time = start_time + 5400
+            if (start_time - Time.parse(user_form.search_time)).between?(0,86400)
+              @film_info << [ movie, cinema, start_time.to_s.chomp(" +0800"), end_time.to_s.chomp(" +0800")]
+            end
+          end
+        end
+      end
+    end    
     slim :result
   end
 
