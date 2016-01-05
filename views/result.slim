@@ -3,43 +3,48 @@ script src="//www.google.com/jsapi"
 script src='js/chartkick.js' type='text/javascript'
 
 .container-fluid
-  / - if @input_movie_name
-  /     h3 Movie name
-  /     = @movie_name
-  /     h3 Movie info
-  /     = @movie_info
-  / - else
-  /     p Not found the movie name or no input
-
   .row
     .col-md-12
-      / .btn-group
-      /   button.btn.btn-default.GINGER_SOFTWARE_control id='location_button'
-      /     | Location
-      /   button.btn.btn-default.dropdown-toggle data-toggle="dropdown"
-      /     span.caret
-      /   ul.dropdown-menu
-      /     li
-      /       a href="#"  Action
-      /     li.disabled
-      /       a href="#"  Another action
-      /     li.divider
-      /     li
-      /       a href="#"  Something else here
-      / .btn-group
-      /   button.btn.btn-default.GINGER_SOFTWARE_control id='language_button'
-      /     | Language
-      /   button.btn.btn-default.dropdown-toggle data-toggle="dropdown"
-      /     span.caret
-      /   ul.dropdown-menu
-      /     li
-      /       a href="#"  Action
-      /     li.disabled
-      /       a href="#"  Another action
-      /     li.divider
-      /     li
-      /       a href="#"  Something else here
-      h3 id='fortest1'
-        | Movie Timeline
-      == timeline(@film_info, id: 'movie_timeline')
+      
+      form role='form' action='/result' method='get'
+
+        .col-md-4
+          .form-group
+            label.text-info Language for the result
+            select.form-control name='language' id='language_input'
+              option selected="selected" value='english' English
+              option value='chinese' Chinese
+
+        .col-md-4
+          .form-group
+            label.text-info Location
+            select.form-control name='location' id='location_input'
+              option selected="selected" value='taipei' Taipei
+              option value='new taipei city' New Taipei City
+              option value='hsinchu' Hsinchu
+              option value='kaohsiung' Kaohsiung
+              option value='taichung' Taichung
+              option value='tainan' Tainan
+              option value='toufen' Toufen
+              option value='pingtung' Pingtung
+              option value='kinmen' Kinmen
+
+        .col-md-4
+          .form-group
+            label.text-info Search date
+            input.form-control type='date' required='' name='search_time' value="#{@user_form.search_time}" min="#{@today}" max="#{@max_day}"
+
+        .col-md-4
+          .form-group
+            label.text-info Movie name
+            input.form-control type='text' name='movie_name' id='movie_name' placeholder='movie name here...' value='#{@user_form.movie_name}'
+
+        .col-md-4
+          .form-group
+            label &nbsp;
+            input.btn.btn-primary.form-control type='submit' value='Search'
+
+    h3 id='fortest1'
+      | Movie Timeline
+    == timeline(@film_info, id: 'movie_timeline')
 
