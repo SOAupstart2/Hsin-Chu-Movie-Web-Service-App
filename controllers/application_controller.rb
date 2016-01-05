@@ -46,31 +46,17 @@ class ApplicationController < Sinatra::Base
     USERS_URL = 'http://kandianying-dymano.herokuapp.com/api/v1/users'
 
     # Store user input into form object
-    user_form = UserForm.new(params)
+    @user_form = UserForm.new(params)
 
     # Get user ID by using service object
     user_id = GetUserID.new(params, USERS_URL).call
 
     # Escape URL to handle Chinese input
-    escaped_url = URI.escape(USERS_URL + "/#{user_id}" + "?name=#{user_form.movie_name}&time=#{user_form.search_time}")
+    escaped_url = URI.escape(USERS_URL + "/#{user_id}" + "?name=#{@user_form.movie_name}&time=#{@user_form.search_time}")
 
-    @get_data = HTTParty.get(escaped_url)
-    @film_info = []
-
-    @get_data["search_name"].each do |cinema, movies|
-      movies.each do |movie, dates|
-        dates.each do |date, times|
-          times.each do |time|
-            start_time = Time.parse(date+' '+time)
-            end_time = start_time + 5400
-            if (start_time - Time.parse(user_form.search_time)).between?(0,86400)
-              @film_info << [ movie, cinema, start_time.to_s.chomp(" +0800"), end_time.to_s.chomp(" +0800")]
-            end
-          end
-        end
-      end
-    end
-    @user_form = user_form
+    get_data = HTTParty.get(escaped_url)
+    
+    @film_info = remake_data(get_data, @user_form.search_time)
     @today = Date.today
     @max_day = @today + 2
 
