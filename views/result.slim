@@ -44,6 +44,9 @@ script src='js/chartkick.js' type='text/javascript'
             label &nbsp;
             input.btn.btn-primary.form-control type='submit' value='Search'
 
+    javascript:
+      document.getElementById('language_input').value="#{@user_form.language}"
+      document.getElementById('location_input').value="#{@user_form.location}"
     h3 id='fortest1'
       | Movie Timeline
     == timeline(@film_info, id: 'movie_timeline')

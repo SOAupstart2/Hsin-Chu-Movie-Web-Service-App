@@ -73,7 +73,7 @@ class ApplicationController < Sinatra::Base
     @user_form = user_form
     @today = Date.today
     @max_day = @today + 4
-    
+
     slim :result
   end
 
