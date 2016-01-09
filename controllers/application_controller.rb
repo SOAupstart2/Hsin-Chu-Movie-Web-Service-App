@@ -49,7 +49,7 @@ class ApplicationController < Sinatra::Base
     @user_form = UserForm.new(params)
 
     #get data from api    
-    movie_data = GetMovieData.new(params, SEARCH_URL).call
+    movie_data = GetMovieData.new(@user_form, SEARCH_URL).call
     # get_data = HTTParty.get(
     #   SEARCH_URL,
     #   body: { name: @user_form.movie_name, 
