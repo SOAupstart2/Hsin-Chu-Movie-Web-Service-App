@@ -50,15 +50,7 @@ class ApplicationController < Sinatra::Base
 
     #get data from api    
     movie_data = GetMovieData.new(@user_form, SEARCH_URL).call
-    # get_data = HTTParty.get(
-    #   SEARCH_URL,
-    #   body: { name: @user_form.movie_name, 
-    #           time: @user_form.search_time,
-    #           language: @user_form.language,
-    #           location: @user_form.location
-    #         }.to_json
-    # )
-    
+
     @film_info = remake_data(movie_data, @user_form.search_time)
     @today = Date.today
     @max_day = @today + 4

@@ -15,7 +15,7 @@ class GetMovieData
               time: @time,
               language: @language,
               location: @location
-            }.to_json
+            }
     )
 
   end
