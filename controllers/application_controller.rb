@@ -37,28 +37,31 @@ class ApplicationController < Sinatra::Base
 
   app_get_root = lambda do
     @today = Date.today
-    @max_day = @today + 2
+    @max_day = @today + 4
 
     slim :home
   end
 
   app_get_result = lambda do
-    USERS_URL = 'http://kandianying-dymano.herokuapp.com/api/v1/users'
+    SEARCH_URL = 'http://kandianying-dymano.herokuapp.com/api/v1/search'
 
     # Store user input into form object
     @user_form = UserForm.new(params)
 
-    # Get user ID by using service object
-    user_id = GetUserID.new(params, USERS_URL).call
-
-    # Escape URL to handle Chinese input
-    escaped_url = URI.escape(USERS_URL + "/#{user_id}" + "?name=#{@user_form.movie_name}&time=#{@user_form.search_time}")
-
-    get_data = HTTParty.get(escaped_url)
+    #get data from api    
+    movie_data = GetMovieData.new(params, SEARCH_URL).call
+    # get_data = HTTParty.get(
+    #   SEARCH_URL,
+    #   body: { name: @user_form.movie_name, 
+    #           time: @user_form.search_time,
+    #           language: @user_form.language,
+    #           location: @user_form.location
+    #         }.to_json
+    # )
     
-    @film_info = remake_data(get_data, @user_form.search_time)
+    @film_info = remake_data(movie_data, @user_form.search_time)
     @today = Date.today
-    @max_day = @today + 2
+    @max_day = @today + 4
 
     slim :result
   end
