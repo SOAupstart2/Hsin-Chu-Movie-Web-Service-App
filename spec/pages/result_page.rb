@@ -1,5 +1,4 @@
 require 'page-object'
-require 'date'
 
 # Page object of result page, which is used for tests.
 class ResultPage
@@ -8,7 +7,7 @@ class ResultPage
   today = Date::today.to_s
 
   page_url "http://localhost:9393/result" \
-           "?language=english&location=hsinchu" \
+           "?language=english&location=taipei" \
            "&search_time=#{today}&movie_name="
 
   h3(:result_desc, :id => 'result_desc')
@@ -17,4 +16,6 @@ class ResultPage
   select_list(:location_input, :id => 'location_input')
   text_field(:movie_name, :id => 'movie_name')
   button(:search_button, :id => 'search_button')
+  div(:movie_timeline, :id => 'movie_timeline')
+  h3(:no_result_msg, :id => 'no_result_msg')
 end

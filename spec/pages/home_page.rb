@@ -18,7 +18,7 @@ class HomePage
   def get_results(language, location, movie_name)
     self.language_input = language
     self.location_input = location
-    self.text_area = movie_name
+    self.movie_name = movie_name
     search_button
   end
 end
