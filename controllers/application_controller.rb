@@ -3,6 +3,7 @@ require 'sinatra/flash'
 require 'httparty'
 require 'hirb'
 require 'slim'
+require 'slim/include'
 require 'json'
 require 'time'
 require 'chartkick'
@@ -13,21 +14,21 @@ class ApplicationController < Sinatra::Base
   enable :sessions
   register Sinatra::Flash
   use Rack::MethodOverride
-  Chartkick.options[:html] = '<div id="%{id}" style="height:380px;">Loading ....</div>'
+  Chartkick.options[:html] = '<div id="%{id}">Loading ....</div>'
   Slim::Engine.set_options pretty: true, sort_attrs: false
   set :views, File.expand_path('../../views', __FILE__)
   set :public_folder, File.expand_path('../../public', __FILE__)
 
   configure do
     Hirb.enable
-    set :api_ver, 'api/v1'
+    set :api_route, '/api/v1/search'
   end
 
-  configure :development, :test do
+  configure :development do
     set :api_server, 'http://localhost:9292'
   end
 
-  configure :production do
+  configure :production, :test do
     set :api_server, 'http://kandianying-dymano.herokuapp.com'
   end
 
@@ -36,26 +37,25 @@ class ApplicationController < Sinatra::Base
   end
 
   app_get_root = lambda do
-    @today = Date.today
-    @max_day = @today + 4
+    now = DateTime.now.to_s.chomp('+08:00')
 
-    slim :home
+    slim :home, locals: { now: now }
   end
 
   app_get_result = lambda do
-    SEARCH_URL = 'http://kandianying-dymano.herokuapp.com/api/v1/search'
-
     # Store user input into form object
-    @user_form = UserForm.new(params)
+    user_form = UserForm.new(params)
 
-    #get data from api
-    movie_data = GetMovieData.new(@user_form, SEARCH_URL).call
+    # Get data from api
+    movie_data = GetMovieData.new(
+      user_form, "#{settings.api_server}#{settings.api_route}"
+    ).call
 
-    @film_info = remake_data(movie_data, @user_form.search_time)
-    @today = Date.today
-    @max_day = @today + 4
+    # film_info = remake_data(movie_data, user_form.search_time)
+    now = DateTime.now.to_s.chomp('+08:00')
 
-    slim :result
+    slim :result, locals: { user_form: user_form, film_info: movie_data,
+                            now: now }
   end
 
   # Web App Views Routes
