@@ -4,16 +4,15 @@ script src='js/chartkick.js' type='text/javascript'
 
 .container-fluid
   .row
-    h3 id='fortest1' align='center'
+    h3.text-info id='result_desc' align='center'
       | Movie Timeline
     br
     .col-md-12
-      
-      form role='form' action='/result' method='get'
 
-        .col-md-2
+      form role='form' action='/result' method='get' id='user_form'
+        .col-md-2.col-md-offset-1
           .form-group
-            label.text-info Language for the result
+            label.text-info Language
             select.form-control name='language' id='language_input'
               option selected="selected" value='english' English
               option value='chinese' Chinese
@@ -40,13 +39,13 @@ script src='js/chartkick.js' type='text/javascript'
         .col-md-2
           .form-group
             label.text-info Movie name
-            input.form-control type='text' name='movie_name' id='movie_name' placeholder='movie name here...' value='#{@user_form.movie_name}'
+            input.form-control type='text' name='movie_name' id='movie_name' placeholder='movie name here' value='#{@user_form.movie_name}'
 
         .col-md-2
           .form-group
             label &nbsp;
-            input.btn.btn-primary.form-control type='submit' value='Search'
-    
+            input.btn.btn-primary.form-control type='submit' value='Search' id='search_button'
+
     javascript:
       document.getElementById('language_input').value="#{@user_form.language}"
       document.getElementById('location_input').value="#{@user_form.location}"
@@ -58,4 +57,4 @@ script src='js/chartkick.js' type='text/javascript'
     - if @film_info != []
       == timeline(@film_info, id: 'movie_timeline')
     - else
-      h3 align='center' No result for movie name and search time you specify 
+      h3 align='center' No result for movie name and search time you specify
