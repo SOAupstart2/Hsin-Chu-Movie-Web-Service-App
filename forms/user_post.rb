@@ -16,9 +16,9 @@ class UserForm
   attribute :language, StringStripped
   attribute :location, StringStripped
   attribute :movie_name, StringStripped
-  attribute :search_time
+  attribute :search_time, StringStripped
 
   validates :language, presence: true
   validates :location, presence: true
-  validates :search_time, presence: true
+  # validates :search_time, presence: true
 end

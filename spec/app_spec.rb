@@ -59,29 +59,30 @@ describe 'Kandianying' do
   end
 
   describe 'Checks if search works' do
-    url = "http://localhost:9393/"
+    url = 'http://localhost:9393/'
 
     it 'Default search' do
       visit HomePage do |page|
-        today = Date::today.to_s
+        # today = DateTime.now.to_s.chomp('+08:00')
+        today = ''
         page.search_button
-        expected_url = "#{url}result?" \
-        "language=english&location=taipei&search_time=#{today}" \
-        "&movie_name="
+        expected_url = "#{url}result?"\
+        "language=english&location=taipei&search_time=#{today}&movie_name="
         page.current_url.must_equal expected_url
       end
     end
 
     it 'Set different language and location' do
       visit HomePage do |page|
-        today = Date::today.to_s
+        # today = DateTime.now.to_s.chomp('+08:00')
+        today = ''
         page.language_input = 'Chinese'
         page.location_input = 'Hsinchu'
         page.movie_name = 'testtesttest'
         page.get_results(
           page.language_input,
           page.location_input,
-          page.movie_name,
+          page.movie_name
         )
         expected_url = "#{url}result?"\
         "language=#{page.language_input.downcase}"\
@@ -91,7 +92,7 @@ describe 'Kandianying' do
       end
     end
   end
-
+=begin
   describe 'Checks the result' do
     it 'When result exists' do
       visit ResultPage do |page|
@@ -110,7 +111,7 @@ describe 'Kandianying' do
       end
     end
   end
-
+=end
   after do
     # @headless.destroy
     @browser.close
