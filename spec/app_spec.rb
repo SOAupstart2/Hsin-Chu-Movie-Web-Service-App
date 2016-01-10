@@ -58,6 +58,59 @@ describe 'Kandianying' do
     end
   end
 
+  describe 'Checks if search works' do
+    url = "http://localhost:9393/"
+
+    it 'Default search' do
+      visit HomePage do |page|
+        today = Date::today.to_s
+        page.search_button
+        expected_url = "#{url}result?" \
+        "language=english&location=taipei&search_time=#{today}" \
+        "&movie_name="
+        page.current_url.must_equal expected_url
+      end
+    end
+
+    it 'Set different language and location' do
+      visit HomePage do |page|
+        today = Date::today.to_s
+        page.language_input = 'Chinese'
+        page.location_input = 'Hsinchu'
+        page.movie_name = 'testtesttest'
+        page.get_results(
+          page.language_input,
+          page.location_input,
+          page.movie_name,
+        )
+        expected_url = "#{url}result?"\
+        "language=#{page.language_input.downcase}"\
+        "&location=#{page.location_input.downcase}&search_time=#{today}"\
+        "&movie_name=#{page.movie_name}"
+        page.current_url.must_equal expected_url
+      end
+    end
+  end
+
+  describe 'Checks the result' do
+    it 'When result exists' do
+      visit ResultPage do |page|
+        page.search_button
+        page.movie_timeline_element.exists?.must_equal true
+        page.no_result_msg_element.exists?.must_equal false
+      end
+    end
+
+    it 'When result does not exists' do
+      visit ResultPage do |page|
+        page.movie_name = SecureRandom.hex(10)
+        page.search_button
+        page.movie_timeline_element.exists?.must_equal false
+        page.no_result_msg_element.exists?.must_equal true
+      end
+    end
+  end
+
   after do
     # @headless.destroy
     @browser.close
