@@ -3,14 +3,14 @@
     .jumbotron
       .row
         .col-md-12
-          h1.text-info align='center' Kandianying
-          h3.text-info align='center' Movie Information Search in Taiwan
+          h1.text-info align='center' id='app_name' Kandianying
+          h3.text-info align='center' id='app_desc' Search Movies in Taiwan
 
-    form role='form' action='/result' method='get'
+    form role='form' action='/result' method='get' id='user_form'
 
       .col-md-3
         .form-group
-          label.text-info Language for the result
+          label.text-info Language
           select.form-control name='language' id='language_input'
             option selected="selected" value='english' English
             option value='chinese' Chinese
@@ -32,14 +32,14 @@
       .col-md-3
         .form-group
           label.text-info Search date
-          input.form-control type='date' required='' name='search_time' value="#{@today}" min="#{@today}" max="#{@max_day}"
+          input.form-control type='date' required='' name='search_time' id='search_time' value="#{@today}" min="#{@today}" max="#{@max_day}"
 
       .col-md-3
         .form-group
           label.text-info Movie name
-          input.form-control type='text' name='movie_name' id='movie_name' placeholder='movie name here...'
-      
-      .col-md-4 class='col-md-offset-4'
+          input.form-control type='text' name='movie_name' id='movie_name' placeholder='movie name here'
+
+      .col-md-4.col-md-offset-4
         .form-group
           label &nbsp;
-          input.btn.btn-primary.form-control type='submit' value='Search'
+          input.btn.btn-primary.form-control type='submit' value='Search' id='search_button'

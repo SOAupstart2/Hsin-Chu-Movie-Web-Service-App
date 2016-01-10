@@ -48,7 +48,7 @@ class ApplicationController < Sinatra::Base
     # Store user input into form object
     @user_form = UserForm.new(params)
 
-    #get data from api    
+    #get data from api
     movie_data = GetMovieData.new(@user_form, SEARCH_URL).call
 
     @film_info = remake_data(movie_data, @user_form.search_time)
