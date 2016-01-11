@@ -9,7 +9,7 @@ module AppHelpers
             start_time = Time.parse(date+' '+time)
             end_time = start_time + 5400
             if (start_time - Time.parse(search_time)).between?(0,86400)
-              film_info << [ movie, cinema, start_time.to_s.chomp(" +0800"), end_time.to_s.chomp(" +0800")]
+              film_info << [ movie, cinema, start_time.to_s, end_time.to_s]
             end
           end
         end
