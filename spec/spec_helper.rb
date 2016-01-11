@@ -11,6 +11,9 @@ require 'rack/test'
 require 'watir-webdriver'
 require 'headless'
 require 'page-object'
+require 'vcr'
+require 'date'
+require 'securerandom'
 
 include Rack::Test::Methods
 
