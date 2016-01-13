@@ -45,7 +45,9 @@ class GetMovieData
       # Long routine to get the right date for after midnight films
       date, time = d[2].split('T')
       date = Date.parse(date)
-      day = MIDNIGHT.include? time[HOUR] ? (date - 1).to_s : date.to_s
+      day = if MIDNIGHT.include? time[HOUR] then (date - 1).to_s
+            else date.to_s
+            end
       result[day] << d
     end
     result.values
