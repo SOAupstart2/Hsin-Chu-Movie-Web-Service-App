@@ -19,34 +19,37 @@ class GetMovieData
     HTTParty.get(@url, body: body)
   end
 
+  def remake_data(key, data, search_time='', film_info = [])
+    data[key].each do |cinema, movies|
+      movies.each do |movie, dates|
+        dates.each do |date, times|
+          times.each do |time|
+            start_time = DateTime.parse("#{date} #{time}+8")
+            start_time += 1 if MIDNIGHT.include? time[HOUR]
+            end_time = start_time + DURATION
+            film_info << [movie, cinema, start_time.to_s, end_time.to_s]
+    end end end end
+    film_info
+  end
+  
   def what_to_get?
-    return %w(search_name search_time) unless @name.empty? && @time.empty?
-    if @time.empty?
-      %w(search_name) unless @name.empty?
-    else %w(search_time)
-    end
+    if @name.empty? && @time.empty? then 'empty'
+    elsif @name.empty? then 'time'
+    elsif @time.empty? then 'name'
+    else 'both' end
   end
 
-  def work_on_movies(movies, cinema, films = [])
-    movies.each do |movie, dates|
-      dates.each do |date, times|
-        date = Date.parse date
-        times.each do |time|
-          date += 1 if MIDNIGHT.include? time[HOUR]
-          start_time = DateTime.parse("#{date} #{time}+8")
-          end_time = start_time + DURATION
-          films << [movie, cinema, start_time.to_s, end_time.to_s]
-        end; end; end
-    films
+  def group_by_date(data)
+    data.group_by{|x| x[2].split('T')[0]}.values
   end
 
-  def call(results = Hash.new { |k, v| k[v] = {} })
-    return results if what_to_get?.nil?
-    what_to_get?.each do |name_or_time|
-      go_to_api[name_or_time].each do |cinema, movies|
-        results[name_or_time][cinema] = work_on_movies(movies, cinema)
-      end
+  def call()
+    data = go_to_api
+    case what_to_get?
+      when 'empty' then []
+      when 'time' then group_by_date(remake_data('search_time', data))
+      when 'name' then group_by_date(remake_data('search_name', data))
+      when 'both' then group_by_date(remake_data('search_name', data))
     end
-    results
   end
 end

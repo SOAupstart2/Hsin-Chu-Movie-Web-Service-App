@@ -10,11 +10,10 @@ require 'chartkick'
 
 # Web Service for Hsinchu cinemas
 class ApplicationController < Sinatra::Base
-  helpers AppHelpers
   enable :sessions
   register Sinatra::Flash
   use Rack::MethodOverride
-  Chartkick.options[:html] = '<div id="%{id}">Loading ....</div>'
+  Chartkick.options[:html] = '<div id="%{id}" style="height:500px">Loading ....</div>'
   Slim::Engine.set_options pretty: true, sort_attrs: false
   set :views, File.expand_path('../../views', __FILE__)
   set :public_folder, File.expand_path('../../public', __FILE__)
@@ -25,7 +24,7 @@ class ApplicationController < Sinatra::Base
   end
 
   configure :development do
-    set :api_server, 'http://localhost:9292'
+    set :api_server, 'http://kandianying-dymano.herokuapp.com'
   end
 
   configure :production, :test do
@@ -37,8 +36,7 @@ class ApplicationController < Sinatra::Base
   end
 
   app_get_root = lambda do
-    now = DateTime.now.to_s.chomp('+08:00')
-
+    now = DateTime.now.to_s.split('+')[0].strip
     slim :home, locals: { now: now }
   end
 
@@ -52,7 +50,7 @@ class ApplicationController < Sinatra::Base
     ).call
 
     # film_info = remake_data(movie_data, user_form.search_time)
-    now = DateTime.now.to_s.chomp('+08:00')
+    now = DateTime.now.to_s.split('+')[0].strip
 
     slim :result, locals: { user_form: user_form, film_info: movie_data,
                             now: now }

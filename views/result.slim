@@ -14,26 +14,18 @@ script src='js/chartkick.js' type='text/javascript'
     javascript:
       document.getElementById('language_input').value="#{user_form.language}"
       document.getElementById('location_input').value="#{user_form.location}"
+      document.getElementById('search_time').value="#{user_form.search_time}"
+      document.getElementById('movie_name').value="#{user_form.movie_name}"
     br
     br
     br
     br
     br
-    - film_info.each do |name_or_time, hash|
+    - if film_info.empty?
+      h3 align='center' id='no_result_msg' No result for your search
+    - else
       - count = 0
-      - unless hash.empty?
-        - hash.each do |cinema, data|
-          - unless data.empty?
-            h3 #{cinema}
-            - height_counter = data.map { |datum| datum[0] }.uniq.length
-            - height_counter = height_counter * 50
-            div style="height:#{height_counter}px"
-              == timeline data, id: "movie_timeline_#{count}"
-            - count += 1
-            br
-            br
-            br
-            br
-            br
-            / == timeline data
-            / h3 align='center' id='no_result_msg' No result for your search
+      - film_info.each do |data|
+        h3 #{data[0][2].split('T')[0]}
+        == timeline(data, id: "movie_timeline_#{count}")
+        - count += 1

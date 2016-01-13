@@ -23,18 +23,12 @@ form role='form' action='/result' method='get' id='user_form'
   .col-md-3
     .form-group
       label.text-info Search date
-      - if defined? user_form
-        input.form-control type='datetime-local' name='search_time' value="#{user_form.search_time}" min="#{now}"
-      - else
-        input.form-control type='datetime-local' name='search_time' id='search_time' min="#{now}"
+      input.form-control type='datetime-local' name='search_time' id='search_time' step=1
 
   .col-md-3
     .form-group
       label.text-info Movie name
-      - if defined? user_form
-        input.form-control type='text' name='movie_name' id='movie_name' placeholder='movie name here' value='#{user_form.movie_name}'
-      - else
-        input.form-control type='text' name='movie_name' id='movie_name' placeholder='movie name here'
+      input.form-control type='text' name='movie_name' id='movie_name' placeholder='movie name here'
 
   .col-md-2
     .form-group
