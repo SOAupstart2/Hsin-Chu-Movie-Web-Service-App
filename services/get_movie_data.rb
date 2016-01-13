@@ -39,8 +39,17 @@ class GetMovieData
     else 'both' end
   end
 
-  def group_by_date(data)
-    data.group_by{|x| x[2].split('T')[0]}.values
+  def group_by_date(data, result = Hash.new { |hash, key| hash[key] = [] })
+    data.each do |d|
+      date, time = d[2].split('T')
+      date = Date.parse(date)
+      if MIDNIGHT.include? time[HOUR]
+        result[(date-1).to_s] << d
+      else
+        result[date.to_s] << d
+      end
+    end
+    result.values
   end
 
   def call()
