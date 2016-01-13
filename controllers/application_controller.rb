@@ -6,6 +6,7 @@ require 'slim'
 require 'slim/include'
 require 'json'
 require 'time'
+# require 'date'
 require 'chartkick'
 
 # Web Service for Hsinchu cinemas
@@ -36,7 +37,8 @@ class ApplicationController < Sinatra::Base
   end
 
   app_get_root = lambda do
-    now = DateTime.now.to_s.split('+')[0].strip
+    now = DateTime.now.to_s.split('+')[0][0, 16].strip
+
     slim :home, locals: { now: now }
   end
 
@@ -50,7 +52,7 @@ class ApplicationController < Sinatra::Base
     ).call
 
     # film_info = remake_data(movie_data, user_form.search_time)
-    now = DateTime.now.to_s.split('+')[0].strip
+    now = DateTime.now.to_s.split('+')[0][0, 16].strip
 
     slim :result, locals: { user_form: user_form, film_info: movie_data,
                             now: now }
