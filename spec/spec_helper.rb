@@ -13,6 +13,7 @@ require 'headless'
 require 'page-object'
 require 'vcr'
 require 'date'
+require 'time'
 require 'securerandom'
 
 include Rack::Test::Methods
