@@ -92,26 +92,26 @@ describe 'Kandianying' do
       end
     end
   end
-=begin
-  describe 'Checks the result' do
-    it 'When result exists' do
-      visit ResultPage do |page|
-        page.search_button
-        page.movie_timeline_element.exists?.must_equal true
-        page.no_result_msg_element.exists?.must_equal false
-      end
-    end
 
-    it 'When result does not exists' do
-      visit ResultPage do |page|
-        page.movie_name = SecureRandom.hex(10)
-        page.search_button
-        page.movie_timeline_element.exists?.must_equal false
-        page.no_result_msg_element.exists?.must_equal true
-      end
-    end
-  end
-=end
+  # describe 'Checks the result' do
+  #   it 'When result exists' do
+  #     visit ResultPage do |page|
+  #       page.search_button
+  #       page.movie_timeline_element.exists?.must_equal true
+  #       page.no_result_msg_element.exists?.must_equal false
+  #     end
+  #   end
+  #
+  #   it 'When result does not exists' do
+  #     visit ResultPage do |page|
+  #       page.movie_name = SecureRandom.hex(10)
+  #       page.search_button
+  #       page.movie_timeline_element.exists?.must_equal false
+  #       page.no_result_msg_element.exists?.must_equal true
+  #     end
+  #   end
+  # end
+
   after do
     # @headless.destroy
     @browser.close

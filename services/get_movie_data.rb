@@ -19,7 +19,7 @@ class GetMovieData
     HTTParty.get(@url, body: body)
   end
 
-  def remake_data(key, data, search_time='', film_info = [])
+  def remake_data(key, data, film_info = [])
     data[key].each do |cinema, movies|
       movies.each do |movie, dates|
         dates.each do |date, times|
@@ -28,37 +28,36 @@ class GetMovieData
             start_time += 1 if MIDNIGHT.include? time[HOUR]
             end_time = start_time + DURATION
             film_info << [movie, cinema, start_time.to_s, end_time.to_s]
-    end end end end
+          end end end end
     film_info
   end
-  
+
   def what_to_get?
     if @name.empty? && @time.empty? then 'empty'
     elsif @name.empty? then 'time'
     elsif @time.empty? then 'name'
-    else 'both' end
+    else 'both'
+    end
   end
 
   def group_by_date(data, result = Hash.new { |hash, key| hash[key] = [] })
     data.each do |d|
+      # Long routine to get the right date for after midnight films
       date, time = d[2].split('T')
       date = Date.parse(date)
-      if MIDNIGHT.include? time[HOUR]
-        result[(date-1).to_s] << d
-      else
-        result[date.to_s] << d
-      end
+      day = MIDNIGHT.include? time[HOUR] ? (date - 1).to_s : date.to_s
+      result[day] << d
     end
     result.values
   end
 
-  def call()
+  def call
     data = go_to_api
     case what_to_get?
-      when 'empty' then []
-      when 'time' then group_by_date(remake_data('search_time', data))
-      when 'name' then group_by_date(remake_data('search_name', data))
-      when 'both' then group_by_date(remake_data('search_name', data))
+    when 'empty' then []
+    when 'time' then group_by_date(remake_data('search_time', data))
+    when 'name' then group_by_date(remake_data('search_name', data))
+    when 'both' then group_by_date(remake_data('search_name', data))
     end
   end
 end
