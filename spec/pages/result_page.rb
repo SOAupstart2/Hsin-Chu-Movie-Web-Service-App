@@ -13,6 +13,5 @@ class ResultPage
   select_list(:location_input, id: 'location_input')
   text_field(:movie_name, id: 'movie_name')
   button(:search_button, id: 'search_button')
-  div(:movie_timeline, id: 'movie_timeline')
   h3(:no_result_msg, id: 'no_result_msg')
 end
