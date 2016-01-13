@@ -24,13 +24,11 @@ class GetMovieData
       movies.each do |movie, dates|
         dates.each do |date, times|
           times.each do |time|
-            start_time = Time.parse(date + ' ' + time)
-            end_time = start_time + 5400
-            if search_time.empty?
-              film_info << [movie, cinema, start_time.to_s, end_time.to_s]
-            elsif (start_time - Time.parse(search_time)).between?(0, 86_400)
-              film_info << [movie, cinema, start_time.to_s, end_time.to_s]
-    end end end end end
+            start_time = DateTime.parse("#{date} #{time}+8")
+            start_time += 1 if MIDNIGHT.include? time[HOUR]
+            end_time = start_time + DURATION
+            film_info << [movie, cinema, start_time.to_s, end_time.to_s]
+    end end end end
     film_info
   end
   
@@ -41,13 +39,17 @@ class GetMovieData
     else 'both' end
   end
 
-  def call(result = [])
+  def group_by_date(data)
+    data.group_by{|x| x[2].split('T')[0]}.values
+  end
+
+  def call()
     data = go_to_api
     case what_to_get?
-      when 'empty' then result
-      when 'time' then result << remake_data('search_time', data)
-      when 'name' then remake_data('search_name', data).group_by{|x| x[2].split(' ')[0]}.values
-      when 'both' then result << remake_data('search_name', data, @time)
+      when 'empty' then []
+      when 'time' then group_by_date(remake_data('search_time', data))
+      when 'name' then group_by_date(remake_data('search_name', data))
+      when 'both' then group_by_date(remake_data('search_name', data))
     end
   end
 end

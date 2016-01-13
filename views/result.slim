@@ -26,5 +26,6 @@ script src='js/chartkick.js' type='text/javascript'
     - else
       - count = 0
       - film_info.each do |data|
+        h3 #{data[0][2].split('T')[0]}
         == timeline(data, id: "movie_timeline_#{count}")
         - count += 1
