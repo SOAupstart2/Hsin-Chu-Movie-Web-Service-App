@@ -63,8 +63,8 @@ describe 'Kandianying' do
 
     it 'Default search' do
       visit HomePage do |page|
-        # now = DateTime.now.to_s.split('+')[0][0, 16].strip.gsub(/:/, "%3A")
-        now = Time.now.getlocal("+08:00").to_s[0, 16].strip.gsub(' ', 'T').gsub(/:/, "%3A")
+        now = DateTime.now.to_s.split('+')[0][0, 16].strip.gsub(/:/, "%3A")
+
         page.search_button
         expected_url = "#{url}result?"\
         "language=english&location=taipei&search_time=#{now}&movie_name="
@@ -72,26 +72,26 @@ describe 'Kandianying' do
       end
     end
 
-    # it 'Set different language and location' do
-    #   visit HomePage do |page|
-    #     now = Time.now.getlocal("+08:00").to_s[0, 16].strip.gsub(' ', 'T').gsub(/:/, "%3A")
-    #
-    #     page.language_input = 'Chinese'
-    #     page.location_input = 'Hsinchu'
-    #     page.search_button
-    #     page.movie_name = SecureRandom.hex(10)
-    #     page.get_results(
-    #       'Chinese',
-    #       'Hsinchu',
-    #       SecureRandom.hex(10)
-    #     )
-    #     expected_url = "#{url}result?"\
-    #     "language=#{page.language_input.downcase}"\
-    #     "&location=#{page.location_input.downcase}&search_time=#{now}"\
-    #     "&movie_name=#{page.movie_name}"
-    #     page.current_url.must_equal expected_url
-    #   end
-    # end
+    it 'Set different language and location' do
+      visit HomePage do |page|
+        now = DateTime.now.to_s.split('+')[0][0, 16].strip.gsub(/:/, "%3A")
+
+        page.language_input = 'Chinese'
+        page.location_input = 'Hsinchu'
+        page.search_button
+        page.movie_name = SecureRandom.hex(10)
+        page.get_results(
+          'Chinese',
+          'Hsinchu',
+          SecureRandom.hex(10)
+        )
+        expected_url = "#{url}result?"\
+        "language=#{page.language_input.downcase}"\
+        "&location=#{page.location_input.downcase}&search_time=#{now}"\
+        "&movie_name=#{page.movie_name}"
+        page.current_url.must_equal expected_url
+      end
+    end
   end
 
   after do
