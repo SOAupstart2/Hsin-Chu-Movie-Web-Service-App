@@ -37,7 +37,6 @@ class ApplicationController < Sinatra::Base
 
   app_get_root = lambda do
     now = Time.now.getlocal("+08:00").to_s[0, 16].strip.gsub(' ', 'T')
-    # now = DateTime.now.to_s.split('+')[0][0, 16].strip
 
     slim :home, locals: { now: now }
   end
@@ -51,9 +50,7 @@ class ApplicationController < Sinatra::Base
       user_form, "#{settings.api_server}#{settings.api_route}"
     ).call
 
-    # film_info = remake_data(movie_data, user_form.search_time)
     now = Time.now.getlocal("+08:00").to_s[0, 16].strip.gsub(' ', 'T')
-    # now = DateTime.now.to_s.split('+')[0][0, 16].strip
 
     slim :result, locals: { user_form: user_form, film_info: movie_data,
                             now: now }

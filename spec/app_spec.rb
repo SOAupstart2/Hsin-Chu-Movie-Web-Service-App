@@ -63,7 +63,7 @@ describe 'Kandianying' do
 
     it 'Default search' do
       visit HomePage do |page|
-        now = DateTime.now.to_s.split('+')[0][0, 16].strip.gsub(/:/, "%3A")
+        now = Time.now.getlocal("+08:00").to_s[0, 16].strip.gsub(' ', 'T').gsub(/:/, "%3A")
 
         page.search_button
         expected_url = "#{url}result?"\
@@ -74,7 +74,7 @@ describe 'Kandianying' do
 
     it 'Set different language and location' do
       visit HomePage do |page|
-        now = DateTime.now.to_s.split('+')[0][0, 16].strip.gsub(/:/, "%3A")
+        now = Time.now.getlocal("+08:00").to_s[0, 16].strip.gsub(' ', 'T').gsub(/:/, "%3A")
 
         page.language_input = 'Chinese'
         page.location_input = 'Hsinchu'
